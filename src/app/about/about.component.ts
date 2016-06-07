@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'my-about',
-  template: require('./about.component.html'),
-  styles: [require('./about.component.scss')]
+  template: require('./about.component.jade'),
+  styles:   [require('./about.component.scss')]
 })
-export class AboutComponent implements OnInit {
 
+export class AboutComponent implements OnInit {
   constructor() {
     // Do stuff
   }
@@ -14,5 +14,4 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
     console.log('Hello About');
   }
-
 }

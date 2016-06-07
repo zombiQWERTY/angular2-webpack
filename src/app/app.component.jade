@@ -1,0 +1,13 @@
+header
+  nav
+    | <a [routerLink]="['Home']">Home</a>
+    | <a [routerLink]="['About']">About</a>
+main
+  h1.title Hello from {{api.title}}!
+
+  // Images (and assets) are parsed and loaded from within the public directory
+  img(src="/img/angular.png")
+
+  router-outlet
+footer
+  | <a [href]="url">Webpack Angular 2 Starter</a>

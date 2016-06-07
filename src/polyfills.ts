@@ -4,13 +4,9 @@ require('zone.js/dist/zone');
 
 import 'ts-helpers';
 
-if (process.env.ENV === 'build') {
-  // Production
+const isBuild = process.env.ENV === 'build';
 
-} else {
-  // Development
-
+if (!isBuild) {
   Error['stackTraceLimit'] = Infinity;
-
   require('zone.js/dist/long-stack-trace-zone');
 }

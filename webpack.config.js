@@ -130,7 +130,10 @@ module.exports = function makeWebpackConfig() {
 
       // support for .html as raw text
       // todo: change the loader to something that adds a hash to images
-      {test: /\.html$/, loader: 'raw'}
+      {test: /\.html$/, loader: 'raw'},
+
+      // support for .jade
+      {test: /\.jade/, loader: 'raw!jade-html'}
     ],
     postLoaders: [],
     noParse: [/.+zone\.js\/dist\/.+/, /.+angular2\/bundles\/.+/, /angular2-polyfills\.js/]
@@ -183,7 +186,7 @@ module.exports = function makeWebpackConfig() {
       // Inject script and link tags into html files
       // Reference: https://github.com/ampedandwired/html-webpack-plugin
       new HtmlWebpackPlugin({
-        template: './src/public/index.html',
+        template: './src/public/index.jade',
         chunksSortMode: 'dependency'
       }),
 
@@ -222,11 +225,23 @@ module.exports = function makeWebpackConfig() {
    * Reference: https://github.com/postcss/autoprefixer-core
    * Add vendor prefixes to your css
    */
-  config.postcss = [
-    autoprefixer({
-      browsers: ['last 2 version']
-    })
-  ];
+  config.postcss = function(bundler) {
+    return [
+      require('postcss-import')({ addDependencyTo: bundler }),
+      require('postcss-inline-comment')(),
+      require('postcss-hexrgba'),
+      require('postcss-size'),
+      require('precss')(),
+      require('postcss-functions')({
+        functions: {}
+      }),
+      require('css-mqpacker')(),
+      require('postcss-discard-comments/dist/index')(),
+      require('autoprefixer')({
+        browsers: ['last 2 version']
+      })
+    ];
+  };
 
   /**
    * Sass
